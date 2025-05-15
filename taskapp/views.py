@@ -160,7 +160,7 @@ class DeleteAdminView(SuperAdminPermissionmixin,View):
             user.delete()
             return redirect('user-list')
         
-class UserDeleteView(AdminPermissionmixin,View):
+class UserDeleteView(SuperAdminPermissionmixin,View):
     def get(self,request,*args,**kwargs):
         
         id = kwargs.get('pk')
