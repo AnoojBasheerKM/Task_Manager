@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Completed-Tasks</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"><body></body>
+</head>
+
+<body class="dark:bg-gray-900">
+
+    <!-- Static Heading -->
+<div class="w-[70%] mx-auto bg-white rounded-lg shadow-md overflow-hidden mt-10">
+    <div class="bg-gray-800 text-white px-6 py-4">
+      <h5 class="text-lg font-semibold text-center">All Tasks</h5>
+    </div>
+  </div>
+  
+  <!-- Loop through users or tasks -->
+  {%if tasks%}
+  {% for task in tasks %}
+    <div class="w-[70%] mx-auto bg-white rounded-lg shadow-md overflow-hidden mt-6">
+      <div class="p-6">
+                {% if task.status == "completed" %}
+        <h5 class="text-lg mb-2 text-green-600"> {{ task.status }}</h5>
+        {% elif task.status == "inprogress" %}
+        <h5 class="text-lg mb-2 text-blue-600"> {{ task.status }}</h5>
+        {% elif task.status == "pending" %}
+        <h5 class="text-lg mb-2 text-red-600">{{ task.status }}</h5>
+        {% else %}
+        <h5 class="text-lg mb-2 text-gray-600">{{ task.status }}</h5>
+        {% endif %}
+        <h5 class="text-xl font-bold mb-2">{{ task.title }}</h5>
+        <h5 class="text-lg font-bold mb-2 uppercase">Assigned To : {{ task.assigned_to }}</h5>
+        <h5 class="text-sm font-bold mb-2">Admin : {{ task.admin }}</h5>
+        <h5 class="text-sm font-bold mb-2">created date : {{ task.created_at }}</h5>
+        <h5 class="text-sm font-bold mb-2">Due Date : {{ task.due_date }}</h5>
+        
+        
+        <p class="text-gray-900 mb-4">
+          {{ task.description }}
+        </p>
+       
+        <div class="flex justify-start space-x-4">
+            {% if task.status == "completed" %}
+          <a href="{%url 'task-completed-report' task.pk%}" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded">
+            View report
+          </a>
+          {% elif task.status == "inprogress" %}
+          <a href="{% url 'task-update' task.pk%}" class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold px-4 py-2 rounded">
+            update task
+            </a>
+            {% elif task.status == "pending" %}
+            <a href="{% url 'task-update' task.pk%}" class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold px-4 py-2 rounded">
+            update task
+            </a>
+            {% else %}
+        {% endif %}
+          
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+  {% else %}
+    <div class="w-[70%] mx-auto bg-white rounded-lg shadow-md overflow-hidden mt-6">
+      <div class="p-6">
+        <h5 class="text-lg mb-2 text-red-600"> No tasks available</h5>
+      {% endif %}
+  
+      
+    
+</body>
+</html>
