@@ -3,7 +3,7 @@ from taskapp.models import User,Task,TaskCompletionReport
 
 
 from rest_framework import serializers
-from .models import Task, TaskCompletionReport
+
 from django.contrib.auth import get_user_model
 
 
@@ -21,16 +21,16 @@ class TaskSerializer(serializers.ModelSerializer):
         
         model = Task
         
-        fields = ['id', 'title', 'description', 'created_at', 'assigned_to', 'due_date', 'admin', 'status']
+        fields = ['id', 'title', 'description', 'created_at', 'assigned_to', 'due_date', 'admin', 'status','worked_hours', 'completion_report']
         
         read_only_fields = ['id', 'created_at', 'assigned_to', 'admin', 'title', 'description', 'due_date']
 
-        def validate(self, data):
+    def validate(self, data):
             
-            if data.get('status') == 'completed':
-                if 'worked_hours' not in data or 'completion_report' not in data:
-                    raise serializers.ValidationError("Worked hours and completion report are required when marking task as completed.")
-            return data
+        if data.get('status') == 'completed':
+            if 'worked_hours' not in data or 'completion_report' not in data:
+                raise serializers.ValidationError("Worked hours and completion report are required when marking task as completed.")
+        return data
 
 
 class TaskCompletionReportSerializer(serializers.ModelSerializer):

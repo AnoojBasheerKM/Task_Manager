@@ -39,7 +39,7 @@ class TaskUpdateView(RetrieveUpdateAPIView):
         
         task = serializer.instance
         old_status = task.status
-        new_status = serializer.validated_data.get('status', old_status)
+        new_status = serializer.validated_data.get('status')
         
         
 
